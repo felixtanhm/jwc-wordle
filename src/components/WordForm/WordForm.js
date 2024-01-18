@@ -10,7 +10,6 @@ function WordForm({ updateGuessList }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (formValue.length !== 5) return;
-    console.info(formValue);
     updateGuessList(formValue);
     setFormValue("");
   }
