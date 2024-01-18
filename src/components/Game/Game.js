@@ -1,9 +1,10 @@
 import React from "react";
 import WordForm from "../WordForm/";
-import GuessDisplay from "../GuessDisplay";
+import GuessDisplay from "../GuessDisplay/";
 
 import { sample } from "../../utils";
 import { WORDS } from "../../data";
+import { checkGuess } from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -12,11 +13,11 @@ console.info({ answer });
 
 function Game() {
   const [guessList, setGuessList] = React.useState([]);
-  console.info(guessList);
 
   function updateGuessList(guess) {
+    const validatedGuess = checkGuess(guess, answer);
     const nextGuessList = [...guessList];
-    nextGuessList.push(guess);
+    nextGuessList.push(validatedGuess);
     setGuessList(nextGuessList);
   }
 
