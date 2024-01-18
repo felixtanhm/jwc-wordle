@@ -1,6 +1,7 @@
 import React from "react";
 import WordForm from "../WordForm/";
 import GuessDisplay from "../GuessDisplay/";
+import Banner from "../Banner";
 
 import { sample } from "../../utils";
 import { WORDS } from "../../data";
@@ -13,18 +14,28 @@ console.info({ answer });
 
 function Game() {
   const [guessList, setGuessList] = React.useState([]);
+  const [status, setStatus] = React.useState("running");
 
   function updateGuessList(guess) {
     const validatedGuess = checkGuess(guess, answer);
     const nextGuessList = [...guessList];
     nextGuessList.push(validatedGuess);
     setGuessList(nextGuessList);
+    if (guess === answer) setStatus("happy");
+    if (nextGuessList.length === 6 && guess !== answer) setStatus("sad");
   }
 
   return (
     <>
       <GuessDisplay guessList={guessList}></GuessDisplay>
-      <WordForm updateGuessList={updateGuessList}></WordForm>
+      <WordForm status={status} updateGuessList={updateGuessList}></WordForm>
+      {status !== "running" && (
+        <Banner
+          status={status}
+          guesses={guessList.length}
+          answer={answer}
+        ></Banner>
+      )}
     </>
   );
 }

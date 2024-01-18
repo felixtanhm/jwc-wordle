@@ -1,6 +1,6 @@
 import React from "react";
 
-function WordForm({ updateGuessList }) {
+function WordForm({ status, updateGuessList }) {
   const [formValue, setFormValue] = React.useState("");
 
   function handleChange(e) {
@@ -20,6 +20,7 @@ function WordForm({ updateGuessList }) {
       <input
         id="guess-input"
         type="text"
+        disabled={status !== "running"}
         maxLength="5"
         minLength="5"
         value={formValue}
